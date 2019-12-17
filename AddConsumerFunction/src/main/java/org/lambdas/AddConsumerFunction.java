@@ -29,7 +29,8 @@ public class AddConsumerFunction implements RequestHandler<Map, ApplicationRespo
         persistData(new Gson().fromJson(event.get("body").toString(), Consumer.class));
 
         ApplicationResponse consumerResponse = new ApplicationResponse();
-        consumerResponse.setMessage("Saved Successfully!!!");
+        consumerResponse.setStatusCode(201);
+        consumerResponse.setBody("Saved Successfully!!!");
         return consumerResponse;
     }
 
@@ -39,8 +40,8 @@ public class AddConsumerFunction implements RequestHandler<Map, ApplicationRespo
                         new PutItemSpec().withItem(new Item()
                                 .withString("cid", consumer.getCid())
                                 .withString("pid", consumer.getPid())
-                                .withBoolean("known_your_customer", consumer.getKnownYourCustomer())
-                                .withBoolean("is_blocked", consumer.getBlocked())));
+                                .withBoolean("knownYourCustomer", consumer.getKnownYourCustomer())
+                                .withBoolean("isBlocked", consumer.getBlocked())));
     }
 
     private void initDynamoDbClient() {

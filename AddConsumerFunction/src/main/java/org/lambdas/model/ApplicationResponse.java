@@ -4,22 +4,22 @@ import java.util.List;
 
 public class ApplicationResponse {
 
-    private String message;
-    private List<Consumer> consumers;
+    private Integer statusCode;
+    private String body;
 
-    public String getMessage() {
-        return message;
+    public Integer getStatusCode() {
+        return statusCode;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setStatusCode(Integer statusCode) {
+        this.statusCode = statusCode;
     }
 
-    public List<Consumer> getConsumers() {
-        return consumers;
+    public String getBody() {
+        return body;
     }
 
-    public void setConsumers(List<Consumer> consumers) {
-        this.consumers = consumers;
+    public void setBody(String body) {
+        this.body = body;
     }
 }

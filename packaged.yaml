@@ -1,0 +1,80 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'lambda-workshop
+
+  Sample SAM Template for lambda-workshop
+
+  '
+Globals:
+  Function:
+    Timeout: 30
+Resources:
+  AddConsumerFunction:
+    Properties:
+      CodeUri: s3://lambda-wokshop/4b9d89d23d8b9a40ac5562de13f14165
+      Events:
+        GetConsumers:
+          Properties:
+            Method: post
+            Path: /consumers
+          Type: Api
+      Handler: org.lambdas.AddConsumerFunction::handleRequest
+      MemorySize: 512
+      Role:
+        Fn::GetAtt:
+        - LambdaRole
+        - Arn
+      Runtime: java8
+    Type: AWS::Serverless::Function
+  DeleteConsumerFunction:
+    Properties:
+      CodeUri: s3://lambda-wokshop/5178a0a5f3a02f142681c1fec059d303
+      Events:
+        GetConsumers:
+          Properties:
+            Method: delete
+            Path: /consumers/{cid}
+          Type: Api
+      Handler: org.lambdas.DeleteConsumerFunction::handleRequest
+      MemorySize: 512
+      Role:
+        Fn::GetAtt:
+        - LambdaRole
+        - Arn
+      Runtime: java8
+    Type: AWS::Serverless::Function
+  GetConsumersFunction:
+    Properties:
+      CodeUri: s3://lambda-wokshop/7494f871a005624e80ace83e91945009
+      Events:
+        GetConsumers:
+          Properties:
+            Method: get
+            Path: /consumers
+          Type: Api
+      Handler: org.lambdas.GetConsumersFunction::handleRequest
+      MemorySize: 512
+      Role:
+        Fn::GetAtt:
+        - LambdaRole
+        - Arn
+      Runtime: java8
+    Type: AWS::Serverless::Function
+  LambdaRole:
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action:
+          - sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/AWSLambdaFullAccess
+      - arn:aws:iam::aws:policy/AmazonS3FullAccess
+      - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
+      - arn:aws:iam::aws:policy/CloudWatchEventsFullAccess
+      RoleName: lambda
+    Type: AWS::IAM::Role
+Transform: AWS::Serverless-2016-10-31
